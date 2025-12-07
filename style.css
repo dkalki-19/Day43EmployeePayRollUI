@@ -39,4 +39,14 @@ input {
     padding: 8px;
     font-size: 16px;
 }
+.profile-pics {
+    display: flex;
+    gap: 15px;
+}
+.profile-pics img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
 
