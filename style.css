@@ -50,7 +50,7 @@ input {
 }
 
 .dept{
-    margin-right: 55px;
+    margin-right: 50px;
 }
 .profile-pics {
     display: flex;
@@ -62,4 +62,15 @@ input {
     border-radius: 50%;
 }
 
+textarea {
+    padding: 8px;
+}
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+button {
+    padding: 10px 20px;
+}
 
