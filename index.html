@@ -8,60 +8,82 @@
 </head>
 <body>
     <header class="main-header">Employee Payroll</header>
-
     <div class="form-container">
         <header class="form-header">Employee Payroll Form</header>
-        <label>Name:</label>
-        <input type="text" id="name" required>
-        <div style="color: red;" class="error" id="nameError"></div>
-        <div class="form-row">
-            <label>Profile Image:</label>
-            <div class="profile-pics">
-                <label class="pfl"><input type="radio" name="profile" value="pic1.png"><img src="assets/pic1.jpg"></label>
-                <label class="pfl"><input type="radio" name="profile" value="pic2.png"><img src="assets/pic2.jpg"></label>
-                <label class="pfl"><input type="radio" name="profile" value="pic3.png"><img src="assets/pic3.jpg"></label>
+        <form id="payrollForm" >
+            <label>Name:</label>
+            <input type="text" id="name" required>
+            <div style="color: red;" class="error" id="nameError"></div>
+            <div class="form-row">
+                <label>Profile Image:</label>
+                <div class="profile-pics">
+                    <label class="pfl"><input type="radio" name="profile" value="pic1.png"><img src="assets/pic1.jpg"></label>
+                    <label class="pfl"><input type="radio" name="profile" value="pic2.png"><img src="assets/pic2.jpg"></label>
+                    <label class="pfl"><input type="radio" name="profile" value="pic3.png"><img src="assets/pic3.jpg"></label>
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <label>Gender:</label>
-            <div class="gender-box">
-                <label class="gnd"><input type="radio" name="gender" value="Male">Male</label>
-                <label class="gnd"><input type="radio" name="gender" value="Female">Female</label>
+            <div class="form-row">
+                <label>Gender:</label>
+                <div class="gender-box">
+                    <label class="gnd"><input type="radio" name="gender" value="Male">Male</label>
+                    <label class="gnd"><input type="radio" name="gender" value="Female">Female</label>
+                </div>
             </div>
-        </div>
 
-        <div class="form-row">
-            <label>Department:</label>
-            <div class="dept-box">
-                <label class="dept"><input type="checkbox" value="HR">HR</label>
-                <label class="dept"><input type="checkbox" value="Sales">Sales</label>
-                <label class="dept"><input type="checkbox" value="Finance">Finance</label>
-                <label class="dept"><input type="checkbox" value="Engineer">Engineer</label>
+            <div class="form-row">
+                <label>Department:</label>
+                <div class="dept-box">
+                    <label class="dept"><input type="checkbox" value="HR">HR</label>
+                    <label class="dept"><input type="checkbox" value="Sales">Sales</label>
+                    <label class="dept"><input type="checkbox" value="Finance">Finance</label>
+                    <label class="dept"><input type="checkbox" value="Engineer">Engineer</label>
+                </div>
             </div>
-        </div>
 
-        <div class="form-row">
-            <label for="salary">Salary: <span id="salary-output">40000</span></label>
-            <input type="range" min="10000" max="100000" value="40000" id="salary">
-        </div>
-        <div class="form-row">
-            <label>Start Date:</label>
-            <div class="date-box">
-                <select id="day"></select>
-                <select id="month"></select>
-                <select id="year"></select>
+            <div class="form-row">
+                <label for="salary">Salary: <span id="salary-output">40000</span></label>
+                <input type="range" min="10000" max="100000" value="40000" id="salary">
             </div>
-        </div>
-        <div class="form-row">
-            <label for="notes">Notes:</label>
-            <textarea id="notes" rows="3"></textarea>
-        </div>
+            <div class="form-row">
+                <div class="date-row">
+                    <label>Start Date:</label>
+                    <select id="day">
+                        <option>1</option><option>2</option><option>3</option>
+                        <option>4</option><option>5</option><option>6</option>
+                    </select>
 
-        <div class="form-buttons">
-            <button type="reset" id="resetBtn">Reset</button>
-            <button id="cancelBtn">Cancel</button>
-            <button id="submitBtn">Submit</button>
-        </div>
+                    <select id="month">
+                        <option value="0">Jan</option>
+                        <option value="1">Feb</option>
+                        <option value="2">Mar</option>
+                        <option value="3">Apr</option>
+                        <option value="4">May</option>
+                        <option value="5">Jun</option>
+                        <option value="6">Jul</option>
+                        <option value="7">Aug</option>
+                        <option value="8">Sep</option>
+                        <option value="9">Oct</option>
+                        <option value="10">Nov</option>
+                        <option value="11">Dec</option>
+                    </select>
+
+                    <select id="year">
+                        <option>2025</option><option>2024</option><option>2023</option>
+                    </select>
+                </div>  
+                <div style="color: red;" class="error" id="dateError"></div>
+            </div>
+            <div class="form-row">
+                <label for="notes">Notes:</label>
+                <textarea id="notes" rows="3"></textarea>
+            </div>
+
+            <div id="buttons" class="form-buttons">
+                <button type="reset" id="resetBtn" class="btn">Reset</button>
+                <button id="cancelBtn" class="btn">Cancel</button>
+                <button id="submitBtn" class="btn">Submit</button>
+            </div>
+        </form>
 
     </div>
 
@@ -100,29 +122,85 @@
         });
 
         function validateStartDate() {
-            let day = document.getElementById("day").value;
-            let month = document.getElementById("month").value;
-            let year = document.getElementById("year").value;
+            console.log("validateStartDate function executing");
 
-            let date = new Date(`${day} ${month} ${year}`);
-            let today = new Date();
+            const day = parseInt(document.getElementById("day").value);
+            const month = parseInt(document.getElementById("month").value); // must be 0–11
+            const year = parseInt(document.getElementById("year").value);
 
-            if (date > today) {
-                dateError.innerText = "Start date cannot be in the future!";
+            const selected = new Date(year, month, day);
+            const today = new Date();
+
+            // Normalize both to MIDNIGHT
+            const selectedMid = new Date(selected.getFullYear(), selected.getMonth(), selected.getDate());
+            const todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+            const diffMs = todayMid - selectedMid;
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+            console.log("Diff:", diffDays);
+
+            // 1️⃣ future date check FIRST
+            if (diffDays < 0) {
+                document.getElementById("dateError").innerText =
+                    "Start date cannot be in the future!";
                 return false;
             }
 
-            let diff = (today - date) / (1000 * 60 * 60 * 24);
-
-            if (diff > 30) {
-                dateError.innerText = "Start date must be within 30 days!";
+            // 2️⃣ older than 30 days check
+            if (diffDays > 30) {
+                document.getElementById("dateError").innerText =
+                    "Start date must be within 30 days!";
                 return false;
             }
 
-            dateError.innerText = "";
+            // 3️⃣ valid
+            document.getElementById("dateError").innerText = "";
             return true;
         }
 
+
+
+        class EmployeePayroll {
+            set name(name) {
+                let regex = /^[A-Z][a-zA-Z ]{2,}$/;
+                if (!regex.test(name)) throw "Invalid Name!";
+                this._name = name;
+            }
+
+            set startDate(date) {
+                let today = new Date();
+                if (date > today) throw "Future date not allowed";
+
+                let diff = (today - date) / (1000 * 60 * 60 * 24);
+                if (diff > 30) throw "Start date must be within 30 days";
+
+                this._startDate = date;
+            }
+        }
+
+        document.getElementById("payrollForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            if (!validateStartDate()) return;
+            
+            try {
+                console.log("Entered into this block");
+                let emp = new EmployeePayroll();
+                emp.name = document.getElementById("name").value;
+
+                let day = document.getElementById("day").value;
+                let month = document.getElementById("month").value;
+                let year = document.getElementById("year").value;
+                emp.startDate = new Date(year, month, day);
+
+                alert("Employee Data Submitted Successfully!");
+                console.log(emp);
+
+            } catch (err) {
+                alert(err);
+            }
+        });
 
 
     </script>
