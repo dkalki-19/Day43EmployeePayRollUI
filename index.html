@@ -45,6 +45,14 @@
             <label for="salary">Salary: <span id="salary-output">40000</span></label>
             <input type="range" min="10000" max="100000" value="40000" id="salary">
         </div>
+        <div class="form-row">
+            <label>Start Date:</label>
+            <div class="date-box">
+                <select id="day"></select>
+                <select id="month"></select>
+                <select id="year"></select>
+            </div>
+        </div>
     </div>
 
 
@@ -52,6 +60,23 @@
         document.getElementById("salary").oninput = function () {
         document.getElementById("salary-output").textContent = this.value;
         };
+
+        const day = document.getElementById("day");
+        const month = document.getElementById("month");
+        const year = document.getElementById("year");
+
+        // Days
+        for (let i = 1; i <= 31; i++)  
+            day.innerHTML += `<option value="${i}">${i}</option>`;
+
+        // Months
+        const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        months.forEach((m, i) => month.innerHTML += `<option value="${i+1}">${m}</option>`);
+
+        // Years
+        for (let y = 2015; y <= 2030; y++)  
+            year.innerHTML += `<option value="${y}">${y}</option>`;
+
     </script>
 </body>
 </html>
