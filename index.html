@@ -11,10 +11,9 @@
 
     <div class="form-container">
         <header class="form-header">Employee Payroll Form</header>
-        <div class="form-row">
-            <label for="name">Name: </label>
-            <input type="text" id="name" placeholder="Enter name">
-        </div>
+        <label>Name:</label>
+        <input type="text" id="name" required>
+        <div style="color: red;" class="error" id="nameError"></div>
         <div class="form-row">
             <label>Profile Image:</label>
             <div class="profile-pics">
@@ -87,6 +86,44 @@
         // Years
         for (let y = 2015; y <= 2030; y++)  
             year.innerHTML += `<option value="${y}">${y}</option>`;
+
+
+        document.getElementById("name").addEventListener("input", function() {
+            let name = this.value;
+            let regex = /^[A-Z][a-zA-Z ]{2,}$/;
+
+            if (!regex.test(name)) {
+                nameError.innerText = "Name must start with capital and min 3 chars!";
+            } else {
+                nameError.innerText = "";
+            }
+        });
+
+        function validateStartDate() {
+            let day = document.getElementById("day").value;
+            let month = document.getElementById("month").value;
+            let year = document.getElementById("year").value;
+
+            let date = new Date(`${day} ${month} ${year}`);
+            let today = new Date();
+
+            if (date > today) {
+                dateError.innerText = "Start date cannot be in the future!";
+                return false;
+            }
+
+            let diff = (today - date) / (1000 * 60 * 60 * 24);
+
+            if (diff > 30) {
+                dateError.innerText = "Start date must be within 30 days!";
+                return false;
+            }
+
+            dateError.innerText = "";
+            return true;
+        }
+
+
 
     </script>
 </body>
