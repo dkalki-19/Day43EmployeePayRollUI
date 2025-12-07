@@ -38,6 +38,19 @@
 input {
     padding: 8px;
     font-size: 16px;
+
+}
+
+.pfl{
+    margin-right: 50px;
+}
+
+.gnd{
+    margin-right: 42px;
+}
+
+.dept{
+    margin-right: 55px;
 }
 .profile-pics {
     display: flex;

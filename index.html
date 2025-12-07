@@ -18,12 +18,40 @@
         <div class="form-row">
             <label>Profile Image:</label>
             <div class="profile-pics">
-                <label><input type="radio" name="profile" value="pic1.png"><img src="assets/pic1.jpg"></label>
-                <label><input type="radio" name="profile" value="pic2.png"><img src="assets/pic2.jpg"></label>
-                <label><input type="radio" name="profile" value="pic3.png"><img src="assets/pic3.jpg"></label>
+                <label class="pfl"><input type="radio" name="profile" value="pic1.png"><img src="assets/pic1.jpg"></label>
+                <label class="pfl"><input type="radio" name="profile" value="pic2.png"><img src="assets/pic2.jpg"></label>
+                <label class="pfl"><input type="radio" name="profile" value="pic3.png"><img src="assets/pic3.jpg"></label>
+            </div>
+        </div>
+        <div class="form-row">
+            <label>Gender:</label>
+            <div class="gender-box">
+                <label class="gnd"><input type="radio" name="gender" value="Male">Male</label>
+                <label class="gnd"><input type="radio" name="gender" value="Female">Female</label>
             </div>
         </div>
 
+        <div class="form-row">
+            <label>Department:</label>
+            <div class="dept-box">
+                <label class="dept"><input type="checkbox" value="HR">HR</label>
+                <label class="dept"><input type="checkbox" value="Sales">Sales</label>
+                <label class="dept"><input type="checkbox" value="Finance">Finance</label>
+                <label class="dept"><input type="checkbox" value="Engineer">Engineer</label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label for="salary">Salary: <span id="salary-output">40000</span></label>
+            <input type="range" min="10000" max="100000" value="40000" id="salary">
+        </div>
     </div>
+
+
+    <script>
+        document.getElementById("salary").oninput = function () {
+        document.getElementById("salary-output").textContent = this.value;
+        };
+    </script>
 </body>
 </html>
